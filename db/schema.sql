@@ -1,0 +1,1 @@
+-- see full DB design in docs; minimal JSON persistence used in stub

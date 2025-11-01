@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Profit solver data schema",
+  "type": "object",
+  "properties": {
+    "BASE_PRICES": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "EFFECT_MULTIPLIERS": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "INGREDIENT_COSTS": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "RULES": {
+      "type": "object"
+    },
+    "PRODUCTION_COSTS": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "BASE_PRICES",
+    "EFFECT_MULTIPLIERS",
+    "INGREDIENT_COSTS",
+    "RULES",
+    "PRODUCTION_COSTS"
+  ]
+}
