@@ -53,3 +53,5 @@ runs/
 db/*.db
 db/*.sqlite
 db/*.sqlite3
+tmp/
+exports/
