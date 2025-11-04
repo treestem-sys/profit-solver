@@ -5,16 +5,14 @@ Tests the GUI can start, show progress, resume, and export results.
 
 import pytest
 import json
-from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
 import sys
+from unittest.mock import MagicMock
 
 # Mock streamlit before importing app
 sys.modules['streamlit'] = MagicMock()
-import streamlit as st
 
-from src.solver.domain import ProductState
-from src.solver.data import DataBundle
+from src.solver.domain import ProductState  # noqa: E402
+from src.solver.data import DataBundle  # noqa: E402
 
 
 @pytest.fixture

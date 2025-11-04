@@ -1,0 +1,30 @@
+{
+  "BASE_PRICES": {
+    "item": 10.0
+  },
+  "EFFECT_MULTIPLIERS": {
+    "x2": 2.0,
+    "x3": 3.0
+  },
+  "INGREDIENT_COSTS": {
+    "a": 1.0,
+    "b": 2.0
+  },
+  "RULES": {
+    "a": {
+      "add_effect": "x2"
+    },
+    "b": {
+      "add_effect": "x3"
+    }
+  },
+  "PRODUCTION_COSTS": {
+    "fixed": 0.0
+  },
+  "expected": {
+    "K": 2,
+    "optimal_profit": 86.0,
+    "optimal_path": ["b", "b"],
+    "optimal_effects": ["x3", "x3"]
+  }
+}

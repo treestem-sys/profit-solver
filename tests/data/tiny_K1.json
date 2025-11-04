@@ -1,0 +1,25 @@
+{
+  "BASE_PRICES": {
+    "simple": 10.0
+  },
+  "EFFECT_MULTIPLIERS": {
+    "boost": 2.0
+  },
+  "INGREDIENT_COSTS": {
+    "herb": 1.0
+  },
+  "RULES": {
+    "herb": {
+      "add_effect": "boost"
+    }
+  },
+  "PRODUCTION_COSTS": {
+    "fixed": 0.0
+  },
+  "expected": {
+    "K": 1,
+    "optimal_profit": 19.0,
+    "optimal_path": ["herb"],
+    "optimal_effects": ["boost"]
+  }
+}

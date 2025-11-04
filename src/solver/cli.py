@@ -1,5 +1,7 @@
 
-import argparse, json, time
+import argparse
+import json
+import time
 from pathlib import Path
 from .data import load_data
 from .domain import ProductState
@@ -7,11 +9,11 @@ from .search import expand_layer, search_with_strategy, compute_profit
 from .persist import with_run
 from .housekeeping import (
     clean_tmp_dirs, clean_runs_dir, get_dir_size,
-    export_topk, export_run_summary, export_metrics, DiskWatermark
+    export_topk, export_run_summary
 )
 
 def cmd_init(args):
-    db = load_data(args.data)
+    load_data(args.data)  # Validate data exists and is readable
     run_id = with_run({"name": args.name, "K": args.K, "data": str(Path(args.data).resolve())})
     print(f"run created: {run_id}")
 
@@ -71,7 +73,7 @@ def cmd_search(args):
     
     if best_state:
         profit = compute_profit(best_state, db)
-        print(f"\nBest solution found:")
+        print("\nBest solution found:")
         print(f"  Product: {best_state.product_type}")
         print(f"  Path: {' -> '.join(best_state.path)}")
         print(f"  Effects: {best_state.effects}")
@@ -140,7 +142,7 @@ def cmd_clean(args):
     # Show disk space
     tmp_size = get_dir_size(Path("tmp"))
     runs_size = get_dir_size(Path("runs"))
-    print(f"\nDisk usage:")
+    print("\nDisk usage:")
     print(f"  tmp/: {tmp_size:.2f} MB")
     print(f"  runs/: {runs_size:.2f} MB")
     

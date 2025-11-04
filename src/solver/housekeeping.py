@@ -10,7 +10,6 @@ import json
 import time
 from pathlib import Path
 from typing import Optional, List, Dict, Any
-import os
 
 
 class TmpDirManager:
