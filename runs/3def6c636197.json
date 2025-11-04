@@ -1,9 +1,0 @@
-{
-  "run_id": "3def6c636197",
-  "started_at": 1761972975.7122722,
-  "params": {
-    "name": "test",
-    "K": 3,
-    "data": "C:\\Users\\baked\\profit-solver\\profit-solver\\data\\example.json"
-  }
-}

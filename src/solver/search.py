@@ -33,11 +33,11 @@ def exhaustive_search(base: ProductState, K: int, ingredients: List[str], data, 
         start_time = time.time()
     
     layer = [base]
-    all_states = []
     
     for depth in range(K):
         if time_limit and (time.time() - start_time) >= time_limit:
-            return (None, all_states, True)
+            # Return current layer as partial results
+            return (None, layer, True)
         
         layer = expand_layer(layer, ingredients, data, constraints, K)
         
@@ -139,6 +139,9 @@ def beam_search(base: ProductState, K: int, ingredients: List[str], data, constr
     if start_time is None:
         start_time = time.time()
     
+    # Blending factor for combining current profit with potential (0.0 = all current, 1.0 = all potential)
+    POTENTIAL_WEIGHT = 0.5
+    
     layer = [base]
     
     for depth in range(K):
@@ -151,10 +154,13 @@ def beam_search(base: ProductState, K: int, ingredients: List[str], data, constr
         if not next_layer:
             break
         
-        # Score each state: current profit + optimistic future
+        # Score each state: blend current profit with optimistic future potential
         scored = []
         for s in next_layer:
-            score = compute_profit(s, data) + (compute_upper_bound(s, K, data) - compute_profit(s, data)) * 0.5  # Blend current and potential
+            current_profit = compute_profit(s, data)
+            upper_bound = compute_upper_bound(s, K, data)
+            potential = upper_bound - current_profit
+            score = current_profit + (potential * POTENTIAL_WEIGHT)
             scored.append((score, s))
         
         # Keep only top beam_width states

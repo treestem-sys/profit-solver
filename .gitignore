@@ -47,3 +47,9 @@ htmlcov/
 *.log
 *.tmp
 .DS_Store
+
+# Runtime data
+runs/
+db/*.db
+db/*.sqlite
+db/*.sqlite3
