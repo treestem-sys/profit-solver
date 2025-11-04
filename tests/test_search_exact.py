@@ -87,12 +87,12 @@ def test_constraints_respected_budget():
         assert not (1 in sol.selection and 2 in sol.selection), \
             "Solution contains B+C which exceeds budget"
     
-    # A+C should be allowed (cost 4.5 > 4.0, so not allowed)
+    # A+C would cost 4.5 > 4.0, so not allowed
     # A+B would cost 5.0 > 4.0, so not allowed
-    # Only valid 2-item combination would be... actually none with this budget!
-    # Let's verify that K=2 returns no solutions or only single-item solutions
+    # B+C would cost 5.5 > 4.0, so not allowed
+    # With this budget, no valid 2-item combinations exist
     
-    # Actually, at depth 2, we need 2 items. Let's check if any valid 2-item combos exist
+    # At depth 2, we need 2 items. Let's check if any valid 2-item combos exist
     if len(solutions) > 0:
         for sol in solutions:
             total_cost = sum(problem.items[idx]["cost"] for idx in sol.selection)
@@ -107,7 +107,7 @@ def test_constraints_respected_budget_allows_some():
             {"name": "B", "cost": 2.0, "profit": 8.0},
             {"name": "C", "cost": 1.5, "profit": 5.0},
         ],
-        constraints={"budget_max": 3.0}  # Budget allows A+B (3.0) or B+C (3.5, not allowed)
+        constraints={"budget_max": 3.0}  # Budget allows A+B (3.0) and A+C (2.5), but not B+C (3.5)
     )
     
     solutions = expand_layered_exact(problem, K=2, top_k=10)
