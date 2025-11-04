@@ -425,24 +425,8 @@ def test_expand_layered_with_learning_respects_depth_limit():
     assert len(children) == 0
 
 
+
 if __name__ == "__main__":
-    # Run tests manually
-    test_phi_state_basic()
-    test_phi_state_effect_counts()
-    test_psi_state_action_basic()
-    test_psi_state_action_existing_effect()
-    test_linear_model_predict()
-    test_linear_model_predict_missing_features()
-    test_linear_model_update()
-    test_policy_score_action()
-    test_policy_select_action_greedy()
-    test_policy_select_action_tie_breaking()
-    test_policy_select_action_random()
-    test_value_estimator_predict()
-    test_save_and_load_model()
-    test_expand_layered_with_learning_no_policy()
-    test_expand_layered_with_learning_with_policy()
-    test_expand_layered_with_learning_logging()
-    test_expand_layered_with_learning_respects_depth_limit()
-    
-    print("All tests passed!")
+    # Run tests with pytest
+    import pytest
+    pytest.main([__file__, "-v"])

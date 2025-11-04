@@ -106,12 +106,11 @@ def expand_layered_with_learning(
                     # Explore: random order
                     random.shuffle(children)
                 else:
-                    # Exploit: sort by score descending
-                    children = sorted(
-                        children, 
-                        key=lambda x: child_scores[children.index(x)],
-                        reverse=True
-                    )
+                    # Exploit: sort by score descending (O(n log n))
+                    children = [
+                        children[idx] 
+                        for idx in sorted(child_scores.keys(), key=lambda i: child_scores[i], reverse=True)
+                    ]
             
             # Add children to output and log if enabled
             for ing, child in children:

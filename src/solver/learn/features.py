@@ -6,11 +6,6 @@ into numeric feature vectors suitable for linear models and machine learning.
 """
 
 from __future__ import annotations
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from ..domain import ProductState
-    from ..data import DataBundle
 
 
 def phi_state(state: ProductState) -> dict[str, float]:
