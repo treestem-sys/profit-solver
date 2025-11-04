@@ -54,3 +54,5 @@ htmlcov/
 # Runs and outputs
 runs/
 train_log.jsonl
+example_log.jsonl
+models/example_model.json
