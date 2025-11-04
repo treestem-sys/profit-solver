@@ -231,13 +231,17 @@ def test_value_breakdown_numeric_precision():
     result = value_breakdown(state, spec)
     
     # All numeric values should be rounded to 6 decimals
-    assert result['base_price'] == 10.123457
-    # sale = 10.123457 * 1.111111111 ≈ 11.248285
-    assert isinstance(result['sale'], float)
-    assert len(str(result['sale']).split('.')[-1]) <= 6 or result['sale'] == round(result['sale'], 6)
+    # base_price is rounded when stored
+    assert result['base_price'] == round(10.123456789, 6)
     
-    # cost = 2.987654 + 3.123457 ≈ 6.111111
-    assert isinstance(result['cost'], float)
+    # sale = base_price * multiplier, rounded to 6 decimals
+    # Note: uses original base_price for calculation, then rounds
+    expected_sale = round(10.123456789 * 1.111111111, 6)
+    assert result['sale'] == expected_sale
+    
+    # cost = product_cost + cost_so_far, rounded to 6 decimals
+    expected_cost = round(2.987654321 + 3.123456789, 6)
+    assert result['cost'] == expected_cost
 
 
 def test_value_breakdown_does_not_mutate_state():
