@@ -106,6 +106,7 @@ def expand_layered_with_learning(
         # Score all available actions
         action_scores = []
         action_features_list = []
+        ingredient_to_idx = {ing: idx for idx, ing in enumerate(ingredients)}
         
         for idx, ing in enumerate(ingredients):
             # Compute state-action features
@@ -130,7 +131,7 @@ def expand_layered_with_learning(
                 out.append(ns)
                 
                 if log_path:
-                    idx = ingredients.index(ing)
+                    idx = ingredient_to_idx[ing]
                     expansion_records.append({
                         "type": "expansion",
                         "depth": s.depth,
