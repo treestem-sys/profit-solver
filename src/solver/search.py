@@ -66,6 +66,10 @@ def expand_layered_with_pruning(
     
     # Precompute sorted ingredient values for upper bound calculation
     # For upper bound: estimate max value increase per step
+    # TODO: This uses a simplified additive model. A more accurate upper bound
+    # would account for multiplicative effect interactions (e.g., multiple effects
+    # multiply together). Consider computing bounds based on current state value
+    # multiplied by remaining multiplicative potential for tighter pruning.
     base_price = float(problem.data.base_prices.get("base", 0.0))
     ingredient_values: List[float] = []
     for ing in problem.ingredients:
@@ -89,7 +93,10 @@ def expand_layered_with_pruning(
     
     for depth in range(K):
         next_layer: List[ProductState] = []
-        best_by_signature.clear()  # Reset per layer for memory efficiency
+        # Reset signature dict per layer for memory efficiency
+        # Note: This means we only fold duplicates within the same parent depth level.
+        # Cross-depth folding could be added as a TODO for more aggressive pruning.
+        best_by_signature.clear()
         
         for state in current_layer:
             stats['nodes_expanded'] += 1
@@ -145,13 +152,17 @@ def expand_layered_with_pruning(
                     partial_value = child.sale_so_far - child.cost_so_far
                     
                     if sig_hash in best_by_signature:
+                        # Found a duplicate state (same signature)
                         existing = best_by_signature[sig_hash]
                         existing_value = existing.sale_so_far - existing.cost_so_far
                         if partial_value > existing_value:
-                            # Replace with better state
+                            # Replace with better state (discarding existing)
                             best_by_signature[sig_hash] = child
+                        # else: discard new child, keep existing
+                        # Count as duplicate either way - we encountered a duplicate signature
                         stats['nodes_pruned_duplicate'] += 1
                     else:
+                        # First time seeing this signature
                         best_by_signature[sig_hash] = child
         
         # Prepare next layer from best states
