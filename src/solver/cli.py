@@ -7,13 +7,14 @@ Provides click-based CLI commands:
 - solve: Run complete search and save best solution
 """
 
-import click
-import json
 from pathlib import Path
+
+import click
+
 from .data import load_data
-from .domain import ProductState, Problem, Solution
+from .domain import Problem, ProductState
+from .persist import load_solution, save_solution, with_run
 from .search import expand_layer, greedy_search
-from .persist import with_run, save_solution, load_solution
 
 
 @click.group()
@@ -28,7 +29,7 @@ def cli():
 @click.option("--data", type=str, required=True, help="Path to data specification JSON")
 def cmd_init(name: str, k: int, data: str):
     """Initialize a new solver run with the given parameters."""
-    db = load_data(data)
+    load_data(data)
     run_id = with_run({"name": name, "K": k, "data": str(Path(data).resolve())})
     click.echo(f"Run created: {run_id}")
 
@@ -39,16 +40,15 @@ def cmd_init(name: str, k: int, data: str):
 @click.option("--base", required=True, help="Base product type")
 def cmd_step(data: str, k: int, base: str):
     """Execute a single search step from base product to depth K.
-    
+
     Note: TODO: Extend to support resume from checkpoint
     """
     db = load_data(data)
-    K = k
     base_state = ProductState(product_type=base)
     layer = [base_state]
-    for _ in range(K):
-        layer = expand_layer(layer, list(db.ingredient_costs.keys()), db, {}, K)
-    click.echo(f"Expanded {len(layer)} states at depth {K}")
+    for _ in range(k):
+        layer = expand_layer(layer, list(db.ingredient_costs.keys()), db, {}, k)
+    click.echo(f"Expanded {len(layer)} states at depth {k}")
 
 
 @cli.command("evaluate")
@@ -56,7 +56,7 @@ def cmd_step(data: str, k: int, base: str):
 @click.option("--data", required=True, help="Path to data specification JSON")
 def cmd_evaluate(solution_path: str, data: str):
     """Evaluate a saved solution and display metrics.
-    
+
     Args:
         solution_path: Path to saved solution JSON file
         data: Path to data specification JSON
@@ -79,21 +79,21 @@ def cmd_evaluate(solution_path: str, data: str):
 @click.option("--output", type=str, default="solution.json", help="Output path for best solution")
 def cmd_solve(data: str, product: str, k: int, output: str):
     """Run greedy search and save the best solution found.
-    
+
     Note: TODO: Add support for different search strategies
     """
     db = load_data(data)
     problem = Problem(product_type=product, max_depth=k, data=db)
-    
+
     best_solution = None
     best_profit = float('-inf')
-    
+
     click.echo(f"Running greedy search for {product} with depth {k}...")
     for solution in greedy_search(problem):
         if solution.profit > best_profit:
             best_profit = solution.profit
             best_solution = solution
-    
+
     if best_solution:
         save_solution(output, best_solution)
         click.echo(f"\nBest solution saved to: {output}")

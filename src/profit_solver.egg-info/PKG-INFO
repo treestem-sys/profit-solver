@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: profit-solver
+Version: 0.0.1
+Summary: Prototype for a search‑based profit maximization engine
+Requires-Python: >=3.12
+Requires-Dist: streamlit>=1.28.0
+Requires-Dist: pytest>=7.4.0
+Requires-Dist: ruff>=0.1.0
+Requires-Dist: click>=8.1.0

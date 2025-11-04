@@ -7,14 +7,15 @@ This module defines the core data structures used throughout the solver:
 """
 
 from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional
+from typing import Any
 
 
 @dataclass
 class ProductState:
     """Represents a partial or complete product configuration.
-    
+
     Attributes:
         product_type: Base product type (e.g., 'potion', 'elixir')
         effects: List of effects applied to the product
@@ -23,16 +24,16 @@ class ProductState:
         path: Ordered list of ingredients used
     """
     product_type: str
-    effects: List[str] = field(default_factory=list)
+    effects: list[str] = field(default_factory=list)
     cost_so_far: float = 0.0
     depth: int = 0
-    path: List[str] = field(default_factory=list)
+    path: list[str] = field(default_factory=list)
 
 
 @dataclass
 class Problem:
     """Defines a profit maximization problem instance.
-    
+
     Attributes:
         product_type: Base product to optimize
         max_depth: Maximum number of ingredients (K)
@@ -42,13 +43,13 @@ class Problem:
     product_type: str
     max_depth: int
     data: Any  # DataBundle type to avoid circular import
-    constraints: Optional[Dict[str, Any]] = None
+    constraints: dict[str, Any] | None = None
 
 
 @dataclass
 class Solution:
     """Represents a solution to a problem.
-    
+
     Attributes:
         state: The final ProductState
         profit: Net profit (sale_value - total_cost)
@@ -64,19 +65,19 @@ class Solution:
 
 
 def apply_ingredient(
-    state: ProductState, 
-    ingredient: str, 
-    rules: Dict[str, Any], 
-    ingredient_costs: Dict[str, float]
+    state: ProductState,
+    ingredient: str,
+    rules: dict[str, Any],
+    ingredient_costs: dict[str, float]
 ) -> ProductState:
     """Apply an ingredient to a product state, creating a new state.
-    
+
     Args:
         state: Current product state
         ingredient: Ingredient name to apply
         rules: Dictionary mapping ingredients to their effects
         ingredient_costs: Dictionary mapping ingredients to their costs
-        
+
     Returns:
         New ProductState with the ingredient applied
     """

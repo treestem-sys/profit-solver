@@ -7,7 +7,7 @@ This package provides:
 """
 
 from .features import extract_features
-from .models import load_model, ModelPredictor
+from .models import ModelPredictor, load_model
 
 __all__ = [
     "extract_features",
