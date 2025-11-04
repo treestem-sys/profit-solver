@@ -1,17 +1,19 @@
 
 from __future__ import annotations
+
+import json
 from dataclasses import dataclass
 from pathlib import Path
-import json
-from typing import Dict, Any
+from typing import Any
+
 
 @dataclass(frozen=True)
 class DataBundle:
-    base_prices: Dict[str, float]
-    effect_multipliers: Dict[str, float]
-    ingredient_costs: Dict[str, float]
-    rules: Dict[str, Any]
-    production_costs: Dict[str, float]
+    base_prices: dict[str, float]
+    effect_multipliers: dict[str, float]
+    ingredient_costs: dict[str, float]
+    rules: dict[str, Any]
+    production_costs: dict[str, float]
 
 def load_data(path: str | Path) -> DataBundle:
     p = Path(path)

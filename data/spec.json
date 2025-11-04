@@ -1,0 +1,42 @@
+{
+  "BASE_PRICES": {
+    "potion": 10.0,
+    "elixir": 15.0,
+    "tonic": 8.0
+  },
+  "EFFECT_MULTIPLIERS": {
+    "healing": 1.5,
+    "strength": 2.0,
+    "speed": 1.2,
+    "wisdom": 1.8,
+    "defense": 1.6
+  },
+  "INGREDIENT_COSTS": {
+    "herb": 1.0,
+    "crystal": 2.5,
+    "dust": 0.5,
+    "essence": 3.0,
+    "powder": 1.5
+  },
+  "RULES": {
+    "herb": {
+      "add_effect": "healing"
+    },
+    "crystal": {
+      "add_effect": "strength"
+    },
+    "dust": {
+      "add_effect": "speed"
+    },
+    "essence": {
+      "add_effect": "wisdom"
+    },
+    "powder": {
+      "add_effect": "defense"
+    }
+  },
+  "PRODUCTION_COSTS": {
+    "fixed": 0.25,
+    "per_ingredient": 0.1
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "model_version": "0.1.0",
+  "model_type": "linear_policy",
+  "description": "Stub model for learned guidance in profit solver",
+  "training_date": "2024-01-01",
+  "features": [
+    "depth",
+    "remaining_steps",
+    "cost_so_far",
+    "base_price",
+    "effect_count"
+  ],
+  "weights": {
+    "depth": -0.1,
+    "remaining_steps": 0.5,
+    "cost_so_far": -0.2,
+    "base_price": 0.8,
+    "effect_count": 0.3
+  },
+  "metadata": {
+    "training_samples": 1000,
+    "validation_accuracy": 0.75,
+    "notes": "TODO: Train on real data and update weights"
+  }
+}
