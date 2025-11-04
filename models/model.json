@@ -1,0 +1,9 @@
+{
+  "weights": {
+    "heuristic_value": 1.0,
+    "effect_multiplier": 0.5,
+    "action_cost": -0.3,
+    "is_new_effect": 0.2
+  },
+  "bias": 0.0
+}
