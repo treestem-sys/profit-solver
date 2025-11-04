@@ -1,0 +1,9 @@
+{
+  "strategy": "exhaustive",
+  "K": 10,
+  "base": "potion",
+  "time_elapsed": 0.0016510486602783203,
+  "time_limit": 0.001,
+  "terminal_states_count": 0,
+  "status": "timeout"
+}
